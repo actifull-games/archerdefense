@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa11ec82e9746928e211e7f096812ca, type: 3}
+  m_Name: Settings
+  m_EditorClassIdentifier: 
+  gameAnalyticsIosGameKey: 
+  gameAnalyticsIosSecretKey: 
+  gameAnalyticsAndroidGameKey: dfc494fb5def0ce1ff1e7bcd40a3f480
+  gameAnalyticsAndroidSecretKey: 96902e3c7fa8defdd755303f97752204d4321a12
+  facebookAppId: 694004612243920
+  facebookClientToken: e840c1ea2af6696db8ee9809d3ac25be
+  adjustIOSToken: 
+  adjustAndroidToken: 9nf8b3b6641s
+  EditorIdfa: 214d9836-777b-47a5-b5a8-e7391ae47baf
+  UseRemoteConfig: 0
+  UseVoodooAnalytics: 1
+  companyName: Actifull
+  privacyPolicyURL: https://pages.flycricket.io/actifull/privacy.html
+  developerContactEmail: actifull@mail.ru
