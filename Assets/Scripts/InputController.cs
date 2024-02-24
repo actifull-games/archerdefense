@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game;
+using MobileFramework;
 using UnityEngine;
 
 public class InputController : MonoBehaviour
@@ -25,12 +28,18 @@ public class InputController : MonoBehaviour
     }
 
     public SpawnState _spawnState;
-
-    public int _power;
+    
     public int _needPowerFance, _needPowerNear, _needPowerFurther;
+
+    private ArchersGameRules _gameRules;
     void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
+        _gameRules = GameManagerBase.Instance.GetGameRules<ArchersGameRules>();
     }
 
     public void SetSpawn(int state)
@@ -53,6 +62,7 @@ public class InputController : MonoBehaviour
     {
         if (GameManager.instance.isStartGame && !GameManager.instance.isGameFailed)
         {
+            var context = _gameRules.PlayerController.GetContext<ArchersPlayerContext>();
             if (_spawnState != SpawnState.none)
             {
                 if (isCreoInputMouse)
@@ -85,7 +95,7 @@ public class InputController : MonoBehaviour
                                     {
                                         if (_spawnState == SpawnState.fance)
                                         {
-                                            if (_power >= _needPowerFance)
+                                            if (context.PowerCount >= _needPowerFance)
                                             {
                                                 GameObject go = Instantiate(_fancePrefab, firstPoint,
                                                     Quaternion.identity);
@@ -98,7 +108,7 @@ public class InputController : MonoBehaviour
 
                                         if (_spawnState == SpawnState.near)
                                         {
-                                            if (_power >= _needPowerNear)
+                                            if (context.PowerCount >= _needPowerNear)
                                             {
                                                 firstPoint = secondPoint = hit.point;
                                                 GameObject go = Instantiate(_nearPrefab, firstPoint,
@@ -111,7 +121,7 @@ public class InputController : MonoBehaviour
 
                                         if (_spawnState == SpawnState.further)
                                         {
-                                            if (_power >= _needPowerFurther)
+                                            if (context.PowerCount >= _needPowerFurther)
                                             {
                                                 firstPoint = secondPoint = hit.point;
                                                 GameObject go = Instantiate(_furtherPrefab, firstPoint,
@@ -139,7 +149,7 @@ public class InputController : MonoBehaviour
 
                                 if (_spawnState == SpawnState.near)
                                 {
-                                    if (_power >= _needPowerNear)
+                                    if (context.PowerCount >= _needPowerNear)
                                     {
                                         firstPoint = secondPoint = hit.point;
                                         GameObject go = Instantiate(_nearPrefab, firstPoint, Quaternion.identity);
@@ -151,7 +161,7 @@ public class InputController : MonoBehaviour
 
                                 if (_spawnState == SpawnState.further)
                                 {
-                                    if (_power >= _needPowerFurther)
+                                    if (context.PowerCount >= _needPowerFurther)
                                     {
                                         firstPoint = secondPoint = hit.point;
                                         GameObject go = Instantiate(_furtherPrefab, firstPoint,
@@ -198,7 +208,7 @@ public class InputController : MonoBehaviour
                                     {
                                         if (_spawnState == SpawnState.fance)
                                         {
-                                            if (_power >= _needPowerFance)
+                                            if (context.PowerCount >= _needPowerFance)
                                             {
                                                 GameObject go = Instantiate(_fancePrefab, firstPoint,
                                                     Quaternion.identity);
@@ -211,7 +221,7 @@ public class InputController : MonoBehaviour
 
                                         if (_spawnState == SpawnState.near)
                                         {
-                                            if (_power >= _needPowerNear)
+                                            if (context.PowerCount >= _needPowerNear)
                                             {
                                                 firstPoint = secondPoint = hit.point;
                                                 GameObject go = Instantiate(_nearPrefab, firstPoint,
@@ -224,7 +234,7 @@ public class InputController : MonoBehaviour
 
                                         if (_spawnState == SpawnState.further)
                                         {
-                                            if (_power >= _needPowerFurther)
+                                            if (context.PowerCount >= _needPowerFurther)
                                             {
                                                 firstPoint = secondPoint = hit.point;
                                                 GameObject go = Instantiate(_furtherPrefab, firstPoint,
@@ -252,7 +262,7 @@ public class InputController : MonoBehaviour
 
                                     if (_spawnState == SpawnState.near)
                                     {
-                                        if (_power >= _needPowerNear)
+                                        if (context.PowerCount >= _needPowerNear)
                                         {
                                             firstPoint = secondPoint = hit.point;
                                             GameObject go = Instantiate(_nearPrefab, firstPoint, Quaternion.identity);
@@ -264,7 +274,7 @@ public class InputController : MonoBehaviour
 
                                     if (_spawnState == SpawnState.further)
                                     {
-                                        if (_power >= _needPowerFurther)
+                                        if (context.PowerCount >= _needPowerFurther)
                                         {
                                             firstPoint = secondPoint = hit.point;
                                             GameObject go = Instantiate(_furtherPrefab, firstPoint,
@@ -283,21 +293,15 @@ public class InputController : MonoBehaviour
         }
     }
 
-    public void SetPowerPlus()
+    public void SetPowerPlus(int value = 1)
     {
-        if (_power < GameManager.instance.maxPowerCount)
-        {
-            _power += 1;
-            UIController.instance.SetTextPower(_power,GameManager.instance.maxPowerCount);
-        }
+        var context = _gameRules.PlayerController.GetContext<ArchersPlayerContext>();
+        context.PowerCount += value;
     }
 
     public void SetPowerMinus(int count)
     {
-        if (_power > 0)
-        {
-            _power -= count;
-            UIController.instance.SetTextPower(_power,GameManager.instance.maxPowerCount);
-        }
+        var context = _gameRules.PlayerController.GetContext<ArchersPlayerContext>();
+        context.PowerCount -= count;
     }
 }

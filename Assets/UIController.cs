@@ -75,10 +75,10 @@ public class UIController : MonoBehaviour
 
     public void SetMoneyText()
     {
-        var gameRules = GameManagerBase.Instance.CurrentGameRules as ArchersGameRules;
+        var gameRules = GameManagerBase.Instance.GetGameRules<ArchersGameRules>();
         if (gameRules != null)
         {
-            _moneyText.text = gameRules.TypedGameContext.playerMoney.ToString();
+            _moneyText.text = gameRules.TypedGameContext.PlayerMoney.ToString();
         }
     }
     public void StartGame()

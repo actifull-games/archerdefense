@@ -2,32 +2,37 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using MobileFramework.Game;
-using MobileFramework.Persistence;
 
 namespace Game
 {
-    public class ArchersGameContext : GameContext, INotifyPropertyChanged
+    public class ArchersPlayerContext : PlayerContext, INotifyPropertyChanged
     {
-        [PersistenceValue("Money")]
-        private int _playerMoney = 0;
-
-        public int PlayerMoney
+        public int PowerCount
         {
-            get => _playerMoney;
+            get => _powerCount;
             set
             {
-                if (value == _playerMoney) return;
+                if (_powerCount == value) return;
+                if (value > _maxPowerCount) return;
                 if (value < 0) return;
-                _playerMoney = value;
+                _powerCount = value;
                 OnPropertyChanged();
-                SaveProperties();
+            }
+        }
+        private int _powerCount;
+        private int _maxPowerCount;
+
+        public int MaxPowerCount
+        {
+            get => _maxPowerCount;
+            set
+            {
+                if (value == _maxPowerCount) return;
+                _maxPowerCount = value;
+                OnPropertyChanged();
             }
         }
 
-        [PersistenceValue("Level")]
-        private int _playerLevel = 1;
-
-        public int playerLevel => _playerLevel;
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

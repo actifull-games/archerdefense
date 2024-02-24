@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: FrameworkSettings
   m_EditorClassIdentifier: 
   _startScene:
-    displayName: 
+    displayName: SplashScene
     buildIndex: 0
-  _reloadStartSceneIfMismatch: 1
+  _reloadStartSceneIfMismatch: 0
   _gameManagerClass:
-    selectedTypeHandle: 0
+    selectedTypeHandle: -1632059067
     baseClass: -160058659
   _gameRulesClass:
-    selectedTypeHandle: 0
+    selectedTypeHandle: 958609430
     baseClass: 1078309003
-  _useLoadingScreen: 1
+  _useLoadingScreen: 0
   _loadingScreen:
-    displayName: 
+    displayName: SplashScene
     buildIndex: 0

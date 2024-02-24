@@ -32,14 +32,14 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _inputController = InputController.instance;
-        _inputController._power = maxPowerCount;
+        //_inputController._power = maxPowerCount;
         _inputController._needPowerFance = fanceCost;
         _inputController._needPowerNear = nearCost;
         _inputController._needPowerFurther = furtherCost;
 
-        UIController.instance.powetSlider.maxValue = maxPowerCount;
-        UIController.instance.powetSlider.value = maxPowerCount;
-        UIController.instance.SetTextPower(maxPowerCount,maxPowerCount);
+        //UIController.instance.powetSlider.maxValue = maxPowerCount;
+        //UIController.instance.powetSlider.value = maxPowerCount;
+        //UIController.instance.SetTextPower(maxPowerCount,maxPowerCount);
         
         
         UIController.instance.SetMoneyText();
