@@ -1,0 +1,3 @@
+[submodule "Packages/com.dxm.mobileframework"]
+	path = Packages/com.dxm.mobileframework
+	url = https://github.com/DirectXManiac/com.dxm.mobileframework.git

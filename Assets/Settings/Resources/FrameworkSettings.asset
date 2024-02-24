@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83887f88fee94da4a26c9f20f2f14156, type: 3}
+  m_Name: FrameworkSettings
+  m_EditorClassIdentifier: 
+  _startScene:
+    displayName: 
+    buildIndex: 0
+  _reloadStartSceneIfMismatch: 1
+  _gameManagerClass:
+    selectedTypeHandle: 0
+    baseClass: -160058659
+  _gameRulesClass:
+    selectedTypeHandle: 0
+    baseClass: 1078309003
+  _useLoadingScreen: 1
+  _loadingScreen:
+    displayName: 
+    buildIndex: 0

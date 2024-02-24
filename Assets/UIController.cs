@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game;
+using MobileFramework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,6 +25,9 @@ public class UIController : MonoBehaviour
     public TMP_Text costFance, costNear, CostFurther;
     
     public Image cursor;
+
+    private ArchersGameRules _gameRules; 
+    
     private void Awake()
     {
         instance = this;
@@ -34,7 +39,8 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
-        _levelText.text = "Level " + PlayerPrefs.GetInt("Level", 1);
+        _gameRules = GameManagerBase.Instance.GetGameRules<ArchersGameRules>();
+        _levelText.text = "Level " + _gameRules.TypedGameContext.playerLevel;
         costFance.text = GameManager.instance.fanceCost.ToString();
         costNear.text = GameManager.instance.nearCost.ToString();
         CostFurther.text = GameManager.instance.furtherCost.ToString();
@@ -69,7 +75,11 @@ public class UIController : MonoBehaviour
 
     public void SetMoneyText()
     {
-        _moneyText.text = GameManager.instance.playerMoney.ToString();
+        var gameRules = GameManagerBase.Instance.CurrentGameRules as ArchersGameRules;
+        if (gameRules != null)
+        {
+            _moneyText.text = gameRules.TypedGameContext.playerMoney.ToString();
+        }
     }
     public void StartGame()
     {
