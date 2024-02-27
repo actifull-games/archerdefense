@@ -27,7 +27,18 @@ namespace Game
         [PersistenceValue("Level")]
         private int _playerLevel = 1;
 
-        public int playerLevel => _playerLevel;
+        public int PlayerLevel
+        {
+            get => _playerLevel;
+            set
+            {
+                if (value == _playerLevel) return;
+                _playerLevel = value;
+                OnPropertyChanged();
+                SaveProperties();
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

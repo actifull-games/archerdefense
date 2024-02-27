@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using Animancer;
+using Attributes;
+using Effects;
+using Game;
+using MobileFramework;
+using MobileFramework.Abilities;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Character : MonoBehaviour
+public class Character : GameBehaviour<ArchersGameRules>
 {
     public int Health;
     public int Damage;
@@ -53,12 +58,40 @@ public class Character : MonoBehaviour
     public Shoot _shooter;
 
     private bool isSetUpgrades;
+
+    private GameplayAbilitySystem _abilitySystem;
+    
+    public StatsAttributes Stats { get; private set; }
+    
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
         _AnimancerComponent = GetComponent<AnimancerComponent>();
         _AIPath.speed = walkSpeed;
         _AnimancerComponent.Play(idle, 0.25f);
+
+
+        _abilitySystem = GetComponent<GameplayAbilitySystem>();
+        if (_abilitySystem == null)
+        {
+            _abilitySystem = gameObject.AddComponent<GameplayAbilitySystem>();
+        }
+
+        Stats = _abilitySystem.AddAttributeSet<StatsAttributes>((ctx, attr) =>
+        {
+            attr.Damage.BaseValue = Damage;
+            attr.AttackRange.BaseValue = distanceToEnemy;
+            attr.AttackSpeed.BaseValue = attakSpeed;
+            attr.Reset();
+        });
+
+        if (GameRules.PlayerController is ArchersPlayerController { Context: ArchersPlayerContext context })
+        {
+            _abilitySystem.ApplyGameplayEffectToSelf<UpgradeDamageMultiplierStatic>(context.DamageLevel, gameObject);
+            _abilitySystem.ApplyGameplayEffectToSelf<UpgradeAttackRangeMultiplierStatic>(context.AttackRangeLevel, gameObject);
+            _abilitySystem.ApplyGameplayEffectToSelf<UpgradeAttackSpeedMultiplierStatic>(context.AttackSpeedLevel, gameObject);
+        }
+
         if (_shooter != null)
         {
             _shooter.Damage = Damage;
@@ -72,13 +105,9 @@ public class Character : MonoBehaviour
         {
             if (!isSetUpgrades)
             {
-                distanceToEnemy += GameManager.instance.rangeLevel;
-                Damage =Damage+(int)Mathf.Pow(1.2f, GameManager.instance.damageLevel);
-                if (GameManager.instance.speedLevel > 0)
-                {
-                    attakSpeed = attakSpeed + (Mathf.Pow(1.1f, GameManager.instance.speedLevel) - 1);
-                }
-
+                distanceToEnemy = Stats.AttackRange.CurrentValue;
+                Damage = (int)Stats.Damage.CurrentValue;
+                attakSpeed = Stats.AttackSpeed.CurrentValue;
                 if (_shooter != null)
                 {
                     _shooter.Damage = Damage;

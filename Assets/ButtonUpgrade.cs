@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game;
+using MobileFramework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonUpgrade : MonoBehaviour
+public class ButtonUpgrade : GameBehaviour<ArchersGameRules>
 {
     public TMP_Text _levelText,_costText;
 
@@ -23,7 +25,8 @@ public class ButtonUpgrade : MonoBehaviour
 
     public void CheckMoney()
     {
-        if (GameManager.instance.playerMoney >= cost)
+        var context = GameRules.TypedGameContext;
+        if (context.PlayerMoney >= cost)
         {
             GetComponent<Image>().color = white;
         }
@@ -50,9 +53,9 @@ public class ButtonUpgrade : MonoBehaviour
 
     public void BuyUpgrade()
     {
-        if (GameManager.instance.playerMoney >= cost)
+        if (GameRules.TypedGameContext.PlayerMoney >= cost)
         {
-            GameManager.instance.MinusMoney(cost);
+            GameRules.TypedGameContext.PlayerMoney -= cost;
             level++;
 
             if (isScaleFactor)
@@ -60,6 +63,7 @@ public class ButtonUpgrade : MonoBehaviour
                 GameManager.instance.scaleFactor += 0.01f;
             }
             UIController.instance.CheckMoneyUpgrade();
+            UIController.instance.UpdatePlayerContext();
             GameManager.instance.SetUpgradeLevels(true);
             SetCost();
         }

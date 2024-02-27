@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Game;
 using MobileFramework;
 using TMPro;
@@ -8,7 +9,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIController : MonoBehaviour
+public class UIController : GameBehaviour<ArchersGameRules>
 {
     public static UIController instance;
     public bool ShowCursor;
@@ -31,20 +32,38 @@ public class UIController : MonoBehaviour
     private void Awake()
     {
         instance = this;
-
-        damageUpgrade.level = PlayerPrefs.GetInt("DamageLevel",0);
-        rangeUpgrade.level = PlayerPrefs.GetInt("RangeLevel",0);
-        speedUpgrade.level = PlayerPrefs.GetInt("SpeedLevel",0);
     }
 
     private void Start()
     {
         _gameRules = GameManagerBase.Instance.GetGameRules<ArchersGameRules>();
-        _levelText.text = "Level " + _gameRules.TypedGameContext.playerLevel;
+        _levelText.text = "Level " + _gameRules.TypedGameContext.PlayerLevel;
+
+        if (_gameRules.PlayerController is ArchersPlayerController { Context: ArchersPlayerContext context })
+        {
+            damageUpgrade.level = context.DamageLevel;
+            damageUpgrade.SetCost();
+            rangeUpgrade.level = context.AttackRangeLevel;
+            rangeUpgrade.SetCost();
+            speedUpgrade.level = context.AttackSpeedLevel;
+            speedUpgrade.SetCost();
+        }
+        
+        _gameRules.TypedGameContext.PropertyChanged += GameContextPropertyChanged;
+
         costFance.text = GameManager.instance.fanceCost.ToString();
         costNear.text = GameManager.instance.nearCost.ToString();
         CostFurther.text = GameManager.instance.furtherCost.ToString();
     }
+
+    private void GameContextPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if(e.PropertyName == nameof(ArchersGameContext.PlayerMoney))
+            SetMoneyText();
+        else if (e.PropertyName == nameof(ArchersGameContext.PlayerLevel))
+            _levelText.text = "Level " + _gameRules.TypedGameContext.PlayerLevel;
+    }
+
     void Update()
     {
         if (ShowCursor)
@@ -75,11 +94,7 @@ public class UIController : MonoBehaviour
 
     public void SetMoneyText()
     {
-        var gameRules = GameManagerBase.Instance.GetGameRules<ArchersGameRules>();
-        if (gameRules != null)
-        {
-            _moneyText.text = gameRules.TypedGameContext.PlayerMoney.ToString();
-        }
+        _moneyText.text = GameRules.TypedGameContext.PlayerMoney.ToString();
     }
     public void StartGame()
     {
@@ -107,7 +122,7 @@ public class UIController : MonoBehaviour
         {
             int money = GameManager.instance.EnemyDestroyCount;
             _failMoneyText.text = "+" + money.ToString();
-            GameManager.instance.PlusPlayerMoney(money);
+            GameRules.TypedGameContext.PlayerMoney += money;
             GamePanel.SetActive(false);
             FailPanel.SetActive(true);
             PlayerPrefs.SetInt("LastPlayerLevel",currentLeveHierarhyID);
@@ -121,10 +136,10 @@ public class UIController : MonoBehaviour
             GameManager.instance.isStartGame = true;
             int money = GameManager.instance.EnemyDestroyCount * 2;
             _winMoneyText.text = "+" + money.ToString();
-            GameManager.instance.PlusPlayerMoney(money);
+            GameRules.TypedGameContext.PlayerMoney += money;
             GamePanel.SetActive(false);
             WinPanel.SetActive(true);
-            PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
+            GameRules.TypedGameContext.PlayerLevel++;
             PlayerPrefs.SetInt("LastPlayerLevel",currentLeveHierarhyID);
         }
     }
@@ -139,6 +154,17 @@ public class UIController : MonoBehaviour
     {
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
+    }
+
+    public void UpdatePlayerContext()
+    {
+        if (GameRules.PlayerController is ArchersPlayerController { Context: ArchersPlayerContext context })
+        {
+            context.DamageLevel = damageUpgrade.level;
+            context.AttackSpeedLevel = speedUpgrade.level;
+            context.AttackRangeLevel = rangeUpgrade.level;
+            context.ApplyChanges();
+        }
     }
 
 }

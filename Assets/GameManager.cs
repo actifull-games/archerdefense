@@ -12,8 +12,7 @@ public class GameManager : MonoBehaviour
     public int maxPowerCount;
 
     public int fanceCost, nearCost, furtherCost;
-
-    public int damageLevel, rangeLevel, speedLevel;
+    
     public float scaleFactor;
     private InputController _inputController;
 
@@ -49,34 +48,9 @@ public class GameManager : MonoBehaviour
 
     public void SetUpgradeLevels(bool isButtonDown=false)
     {
-        damageLevel = UIController.instance.damageUpgrade.level;
-        rangeLevel = UIController.instance.rangeUpgrade.level;
-        speedLevel = UIController.instance.speedUpgrade.level;
         scaleFactor = PlayerPrefs.GetFloat("ScaleFactor",0);
-        PlayerPrefs.SetFloat("ScaleFactor",scaleFactor);
-        PlayerPrefs.SetInt("DamageLevel",damageLevel);
-        PlayerPrefs.SetInt("RangeLevel",rangeLevel);
-        PlayerPrefs.SetInt("SpeedLevel",speedLevel);
         
         TowerController.instance.SetUpgrade(isButtonDown);
-    }
-    public void MinusMoney(int moneyMinus)
-    {
-        playerMoney -= moneyMinus;
-        if (playerMoney <= 0)
-        {
-            playerMoney = 0;
-        }
-
-        PlayerPrefs.SetInt("Money", playerMoney);
-        UIController.instance.SetMoneyText();
-    }
-
-    public void PlusPlayerMoney(int plusMoney)
-    {
-        playerMoney += plusMoney;
-        PlayerPrefs.SetInt("Money", playerMoney);
-        UIController.instance.SetMoneyText();
     }
     
     public void AddEnemyCount(int count)

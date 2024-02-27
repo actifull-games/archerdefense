@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Animancer;
 using DG.Tweening;
+using Game;
+using MobileFramework;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TowerController : MonoBehaviour
+public class TowerController : GameBehaviour<ArchersGameRules>
 {
     public static TowerController instance;
 
@@ -96,11 +98,14 @@ public class TowerController : MonoBehaviour
 
     public void SetUpgrade(bool isButtonDown = false)
     {
+        var controller = (ArchersPlayerController)GameRules.PlayerController;
         float scale = Mathf.Clamp((characterScale + GameManager.instance.scaleFactor), 1.5f, 2.3f);
         _TowerPlayerAnimancer.transform.localScale = Vector3.one * scale;
-        distanceToEnemy =startDistance+ GameManager.instance.rangeLevel;
-        Damage =Damage+(int)Mathf.Pow(1.2f, GameManager.instance.damageLevel);
-        attakSpeed = attakSpeed+(Mathf.Pow(1.1f, GameManager.instance.speedLevel)-1);
+        controller.Tower.ApplyUpgrades();
+
+        distanceToEnemy = controller.Tower.Stats.AttackRange.CurrentValue;
+        Damage = (int)controller.Tower.Stats.Damage.CurrentValue;
+        attakSpeed = controller.Tower.Stats.AttackSpeed.CurrentValue;
         distanceArcherVisual.localScale =
             new Vector3(distanceToEnemy / 10f, distanceToEnemy / 10f, distanceToEnemy / 10f);
         if (_shooter != null)
@@ -136,18 +141,7 @@ public class TowerController : MonoBehaviour
             
             if (!isSetUpgrades)
             {       
-                float scale = Mathf.Clamp((characterScale + GameManager.instance.scaleFactor), 1.5f, 2.3f);
-                _TowerPlayerAnimancer.transform.localScale = Vector3.one * scale;
-                distanceToEnemy =startDistance+ GameManager.instance.rangeLevel;
-                Damage =Damage+(int)Mathf.Pow(1.2f, GameManager.instance.damageLevel);
-                attakSpeed = attakSpeed+(Mathf.Pow(1.1f, GameManager.instance.speedLevel)-1);
-                distanceArcherVisual.localScale =
-                    new Vector3(distanceToEnemy / 10f, distanceToEnemy / 10f, distanceToEnemy / 10f);
-                if (_shooter != null)
-                {
-                    _shooter.Damage = Damage;
-                }
-                isSetUpgrades = true;
+                SetUpgrade(false);
             }
         }
 

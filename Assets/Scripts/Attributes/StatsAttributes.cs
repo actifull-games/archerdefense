@@ -2,7 +2,7 @@
 
 namespace Attributes
 {
-    public class TowerAttributes : GameplayAttributesBase
+    public class StatsAttributes : GameplayAttributesBase
     {
         public GameplayAttribute<float> Damage { get; } = 5.0f;
         public GameplayAttribute<float> AttackSpeed { get; } = 4.0f;

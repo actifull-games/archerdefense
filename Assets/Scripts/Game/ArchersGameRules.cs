@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using MobileFramework.Game;
+using Tower;
 
 namespace Game
 {
@@ -25,6 +26,15 @@ namespace Game
             UIController.instance.powetSlider.maxValue = playerContext.MaxPowerCount;
             playerContext.PowerCount = _settings.initialPlayerPower;
             
+        }
+
+        protected override void OnBeginPlay()
+        {
+            if (PlayerController is ArchersPlayerController controller)
+            {
+                var tower = FindObjectOfType<TowerPawn>();
+                controller.Tower = tower;
+            }
         }
 
         private void PlayerContextOnPropertyChanged(object sender, PropertyChangedEventArgs e)

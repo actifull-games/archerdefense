@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using MobileFramework.Game;
+using MobileFramework.Persistence;
 
 namespace Game
 {
@@ -31,6 +32,35 @@ namespace Game
                 _maxPowerCount = value;
                 OnPropertyChanged();
             }
+        }
+
+        [PersistenceValue("DamageLevel")]
+        private int _damageLevel = 0;
+        public int DamageLevel
+        {
+            get => _damageLevel;
+            set => _damageLevel = value;
+        }
+
+        [PersistenceValue("SpeedLevel")]
+        private int _attackSpeedLevel = 0;
+        public int AttackSpeedLevel
+        {
+            get => _attackSpeedLevel;
+            set => _attackSpeedLevel = value;
+        }
+
+        [PersistenceValue("RangeLevel")]
+        private int _rangeLevel = 0;
+        public int AttackRangeLevel
+        {
+            get => _rangeLevel;
+            set => _rangeLevel = value;
+        }
+
+        public void ApplyChanges()
+        {
+            SaveProperties();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
