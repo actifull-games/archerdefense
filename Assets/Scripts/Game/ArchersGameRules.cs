@@ -16,6 +16,14 @@ namespace Game
 
         private LevelSettings _settings;
 
+        public bool IsWin { get; private set; }
+        
+        public void LevelFailed()
+        {
+            IsWin = false;
+            FinishGame();
+        }
+
         private void Start()
         {
             _settings = FindObjectOfType<LevelSettings>();

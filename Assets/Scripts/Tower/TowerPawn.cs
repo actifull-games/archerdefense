@@ -46,6 +46,18 @@ namespace Tower
                 attr.Health.BaseValue = maxHealth;
                 attr.Reset();
             });
+            Vitality.Health.Changed.AddListener(DamageTaken);
+            Vitality.Death.AddListener(OnDeath);
+        }
+
+        private void DamageTaken()
+        {
+            
+        }
+
+        private void OnDeath()
+        {
+            GameRules.LevelFailed();
         }
 
         public void ApplyUpgrades()
