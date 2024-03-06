@@ -30,14 +30,5 @@ namespace Effects
                 attr.Damage.CurrentValue += _addedDamage;
             });
         }
-
-        [AttributesChangeMethod(AttributeChangeOn.Clear)]
-        public void ClearEffectFromAttributes(StatsAttributes attributes, GameplayEffectApplyContext effectApplyContext)
-        {
-            attributes.MakeTransactionChanges<StatsAttributes>((t, attr) =>
-            {
-                attr.Damage.CurrentValue -= _addedDamage;
-            });
-        }
     }
 }

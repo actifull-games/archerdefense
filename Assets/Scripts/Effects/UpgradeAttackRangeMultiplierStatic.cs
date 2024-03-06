@@ -13,6 +13,11 @@ namespace Effects
         
         private float _addedValue = 0.0f;
 
+        public UpgradeAttackRangeMultiplierStatic()
+        {
+            Type = GameplayEffectType.Static;
+        }
+
         [AttributesChangeMethod(AttributeChangeOn.Apply)]
         public void ApplyEffectToAttributes(StatsAttributes attributes, GameplayEffectApplyContext effectApplyContext)
         {
@@ -20,15 +25,6 @@ namespace Effects
             {
                 _addedValue = (float)effectApplyContext.Level;
                 attr.AttackRange.CurrentValue += _addedValue;
-            });
-        }
-
-        [AttributesChangeMethod(AttributeChangeOn.Clear)]
-        public void ClearEffectFromAttributes(StatsAttributes attributes, GameplayEffectApplyContext effectApplyContext)
-        {
-            attributes.MakeTransactionChanges<StatsAttributes>((t, attr) =>
-            {
-                attr.AttackRange.CurrentValue -= _addedValue;
             });
         }
     }

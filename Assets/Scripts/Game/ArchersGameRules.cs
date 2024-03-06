@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using MobileFramework.Game;
 using Tower;
+using UnityEngine;
 
 namespace Game
 {
@@ -56,5 +58,20 @@ namespace Game
         }
 
         public ArchersGameContext TypedGameContext => GetContext<ArchersGameContext>();
+
+        public IReadOnlyList<GameObject> Enemies => _enemies;
+
+
+        private List<GameObject> _enemies = new();
+        
+        public void AddEnemy(GameObject obj)
+        {
+            _enemies.Add(obj);
+        }
+
+        public void RemoveEnemy(GameObject obj)
+        {
+            _enemies.Remove(obj);
+        }
     }
 }

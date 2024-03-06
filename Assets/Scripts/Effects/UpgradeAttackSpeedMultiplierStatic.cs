@@ -10,6 +10,11 @@ namespace Effects
         public override float CalculateDuration(GameplayEffectApplyContext effectContext) => 0.0f;
 
         public override float CalculatePeriod(GameplayEffectApplyContext effectApplyContext) => 0.0f;
+
+        public UpgradeAttackSpeedMultiplierStatic()
+        {
+            Type = GameplayEffectType.Static;
+        }
         
         private float _addedValue = 0.0f;
 
@@ -20,15 +25,6 @@ namespace Effects
             {
                 _addedValue = Mathf.Pow(1.1f, (float)effectApplyContext.Level) - 1f;
                 attr.AttackSpeed.CurrentValue += _addedValue;
-            });
-        }
-
-        [AttributesChangeMethod(AttributeChangeOn.Clear)]
-        public void ClearEffectFromAttributes(StatsAttributes attributes, GameplayEffectApplyContext effectApplyContext)
-        {
-            attributes.MakeTransactionChanges<StatsAttributes>((t, attr) =>
-            {
-                attr.AttackSpeed.CurrentValue -= _addedValue;
             });
         }
     }

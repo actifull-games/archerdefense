@@ -13047,6 +13047,7 @@ GameObject:
   - component: {fileID: 611721839}
   - component: {fileID: 611721840}
   - component: {fileID: 611721841}
+  - component: {fileID: 611721842}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
@@ -13083,7 +13084,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 611721837}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad51a26610d7c454480af6b2100a6761, type: 3}
   m_Name: 
@@ -13137,6 +13138,24 @@ MonoBehaviour:
   baseAttackSpeed: 4
   baseAttackRange: 10
   maxHealth: 20
+--- !u!114 &611721842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611721837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6d5f35b37c4535b8c82f570194a67d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoShoot: 1
+  projectilePrefab: {fileID: 0}
+  projectileSpawn: {fileID: 0}
+  OnShoot:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &634398079
 GameObject:
   m_ObjectHideFlags: 0
@@ -31905,6 +31924,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 611721838}
     m_Modifications:
+    - target: {fileID: 941541839620711789, guid: a2a7f54a10ae24259b15f71a18d528ef,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: fa3457f71ca966344bd0b394d65996d0, type: 2}
     - target: {fileID: 4931097123581686176, guid: a2a7f54a10ae24259b15f71a18d528ef,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -31993,6 +32017,11 @@ PrefabInstance:
     - target: {fileID: 6625124373021818647, guid: a2a7f54a10ae24259b15f71a18d528ef,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664081673879696922, guid: a2a7f54a10ae24259b15f71a18d528ef,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6738440704051813982, guid: a2a7f54a10ae24259b15f71a18d528ef,
@@ -32098,7 +32127,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 6664081673138951110}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1459391656}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
   m_Name: 
@@ -32133,3 +32162,15 @@ CapsuleCollider:
   m_Height: 1.5319934
   m_Direction: 1
   m_Center: {x: 0, y: 0.7786391, z: 0}
+--- !u!114 &6664081673138951121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459391656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94b9ae8935cc4c4986d0539ab05e1ad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

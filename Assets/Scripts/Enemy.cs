@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Animancer;
 using DG.Tweening;
+using Game;
+using MobileFramework;
+using MobileFramework.Game;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : GameBehaviour<ArchersGameRules>
 {
     public bool isBoss;
     public bool ignoreSpeedAnim;
@@ -62,6 +65,7 @@ public class Enemy : MonoBehaviour
         BasePosition = new Vector3(Random.Range(_Base.position.x - 2f, _Base.position.x + 2f),
             _Base.position.y,
             Random.Range(_Base.position.z - 2f, _Base.position.z + 2f));
+        GameRules.AddEnemy(gameObject);
     }
 
     private AnimancerState stateWalk;
@@ -209,6 +213,7 @@ public class Enemy : MonoBehaviour
                     isDead = true;
                     _AIPath.canMove = false;
                     GameManager.instance.RemoveEnemy();
+                    GameRules.RemoveEnemy(gameObject);
                     if (isBoss)
                     {
                         BossSpawner.instance.isBossDesd = true;
