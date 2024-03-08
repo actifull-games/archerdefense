@@ -8,16 +8,10 @@ using UnityEngine;
 namespace Shooting
 {
     
-    [Serializable]
-    public class ProjectileEffect
-    {
-        public ScriptType<GameplayEffectBase> Effect;
-        public int EffectLevel;
-    }
-    
+   
     public class ProjectileWithEffects : MonoBehaviour
     {
-        public List<ProjectileEffect> Effects;
+        public List<GameplayEffectReference> Effects;
         
         public GameObject Owner { get; set; }
 
@@ -27,9 +21,9 @@ namespace Shooting
             var ownerAbilitySystem = GameplayAbilitySystem.FindAbilitySystem(Owner);
             if (abilitySystem != null && ownerAbilitySystem != null)
             {
-                foreach (var effect in Effects.Where(x => x.Effect.Type != null))
+                foreach (var effect in Effects.Where(x => x.EffectType != null))
                 {
-                    ownerAbilitySystem.ApplyGameplayEffectToTarget(effect.Effect.Type, target, effect.EffectLevel);
+                    ownerAbilitySystem.ApplyGameplayEffectToTarget(effect.EffectType, target, effect.EffectLevel);
                 }
             }
             Destroy(gameObject);

@@ -5295,6 +5295,12 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!4 &121134225 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 490030567789000018, guid: a2a7f54a10ae24259b15f71a18d528ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 6664081673138951110}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &128056137
 GameObject:
   m_ObjectHideFlags: 0
@@ -13151,8 +13157,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoShoot: 1
-  projectilePrefab: {fileID: 0}
-  projectileSpawn: {fileID: 0}
+  projectilePrefab: {fileID: 476985634478620052, guid: da770e54ea7d949cfa61e2eeaa416849,
+    type: 3}
+  projectileSpawn: {fileID: 121134225}
   OnShoot:
     m_PersistentCalls:
       m_Calls: []

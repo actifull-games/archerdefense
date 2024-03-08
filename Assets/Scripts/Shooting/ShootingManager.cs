@@ -64,6 +64,7 @@ namespace Shooting
             if (_currentTarget == null) return;
             var projectile = Instantiate(projectilePrefab, projectileSpawn.position, projectileSpawn.rotation);
             var projectileComponent = projectile.GetComponent<ProjectileWithEffects>();
+            projectileComponent.Owner = gameObject;
             if (projectileComponent is TargetedProjectile t)
             {
                 t.LookAtTarget = true;
@@ -72,7 +73,9 @@ namespace Shooting
             else if (projectileComponent is PhysicsProjectile p)
             {
                 p.LookAtTarget = true;
-                p.LaunchProjectile((_currentTarget.transform.position - transform.position).normalized, 300.0f);
+                p.LaunchProjectile((_currentTarget.transform.position - projectileSpawn.transform.position).normalized);
+                
+                Debug.DrawLine(projectileSpawn.transform.position, _currentTarget.transform.position, Color.red, 1.0f);
             }
         }
 
