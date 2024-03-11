@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using MobileFramework.Game;
@@ -72,6 +73,17 @@ namespace Game
         public void RemoveEnemy(GameObject obj)
         {
             _enemies.Remove(obj);
+            if (_enemies.Count == 0)
+            {
+                StartCoroutine(WinRoutine());
+            }
+        }
+
+        public IEnumerator WinRoutine()
+        {
+            TowerController.instance.StartWinParticle();
+            yield return new WaitForSeconds(2f);
+            UIController.instance.OpenWin();
         }
     }
 }

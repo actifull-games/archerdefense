@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         EnemyDestroyCount += 1;
         if (EnemyCounts <= 0)
         {
-            StartCoroutine(WaitForWin());
+            //StartCoroutine(WaitForWin());
         }
     }
 

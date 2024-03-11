@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Animancer;
+using Attributes;
 using DG.Tweening;
 using Game;
 using MobileFramework;
+using MobileFramework.Abilities;
 using MobileFramework.Game;
 using Pathfinding;
 using UnityEngine;
@@ -65,7 +67,73 @@ public class Enemy : GameBehaviour<ArchersGameRules>
         BasePosition = new Vector3(Random.Range(_Base.position.x - 2f, _Base.position.x + 2f),
             _Base.position.y,
             Random.Range(_Base.position.z - 2f, _Base.position.z + 2f));
+        InitAbilities();
         GameRules.AddEnemy(gameObject);
+    }
+
+    private GameplayAbilitySystem _abilitySystem;
+    private EnemyStatsAttributes _stats;
+
+    private VitalityAttributes _vitality;
+
+    private void InitAbilities()
+    {
+        _abilitySystem = GetComponent<GameplayAbilitySystem>();
+        if (_abilitySystem == null)
+        {
+            _abilitySystem = gameObject.AddComponent<GameplayAbilitySystem>();
+        }
+        _stats = _abilitySystem.AddAttributeSet<EnemyStatsAttributes>((ctx, s) =>
+        {
+            s.MoveSpeed.BaseValue = walkSpeed;
+            s.Damage.BaseValue = Damage;
+            s.AttackSpeed.BaseValue = attakSpeed;
+            s.Reset();
+        });
+        _vitality = _abilitySystem.AddAttributeSet<VitalityAttributes>((ctx, s) =>
+        {
+            s.MaxHealth.BaseValue = Health;
+            s.Health.BaseValue = Health;
+            s.Reset();
+        });
+        _vitality.Death.AddListener(OnDeath);
+        _vitality.Health.Changed.AddListener(OnDamage);
+    }
+
+    private void OnDamage()
+    {
+        if (!isChancaMaterials)
+        {
+            isChancaMaterials = true;
+            StartCoroutine(LightRenderer());
+        }
+        
+        if (_Character != null)
+        {
+            if (Vector3.Distance(transform.position, _Character.position) > distanceToCharacter + 1f)
+            {
+                _Character = null;
+            }
+        }
+
+        GameObject plusMoneyCanvas = Instantiate(_canvasPlus, _canvasSpawner.position, Quaternion.identity);
+        plusMoneyCanvas.transform.DOMoveY(4f, 1.1f).OnComplete(() => { Destroy(plusMoneyCanvas); });
+        InputController.instance.SetPowerPlus();
+    }
+
+    private void OnDeath()
+    {
+        isDead = true;
+        _AIPath.canMove = false;
+        GameManager.instance.RemoveEnemy();
+        GameRules.RemoveEnemy(gameObject);
+        if (isBoss)
+        {
+            BossSpawner.instance.isBossDesd = true;
+        }
+
+        PlayAnimation(AnimationStateE.dead);
+        Destroy(gameObject, 5f);
     }
 
     private AnimancerState stateWalk;
@@ -205,23 +273,6 @@ public class Enemy : GameBehaviour<ArchersGameRules>
                     }
                 }
             }
-
-            if (!isDead)
-            {
-                if (Health <= 0)
-                {
-                    isDead = true;
-                    _AIPath.canMove = false;
-                    GameManager.instance.RemoveEnemy();
-                    GameRules.RemoveEnemy(gameObject);
-                    if (isBoss)
-                    {
-                        BossSpawner.instance.isBossDesd = true;
-                    }
-
-                    PlayAnimation(AnimationStateE.dead);
-                }
-            }
         }
         else
         {
@@ -232,38 +283,7 @@ public class Enemy : GameBehaviour<ArchersGameRules>
 
     public void SetMyDamage(int myDamage)
     {
-        if (!isChancaMaterials)
-        {
-            isChancaMaterials = true;
-            StartCoroutine(LightRenderer());
-        }
         
-        if (_Character != null)
-        {
-            if (Vector3.Distance(transform.position, _Character.position) > distanceToCharacter + 1f)
-            {
-                _Character = null;
-            }
-        }
-
-        if (Health > 0)
-        {
-            GameObject plusMoneyCanvas = Instantiate(_canvasPlus, _canvasSpawner.position,
-                Quaternion.identity);
-            plusMoneyCanvas.transform.DOMoveY(4f, 1.1f).OnComplete(() =>
-            {
-                Destroy(plusMoneyCanvas);
-            });
-            InputController.instance.SetPowerPlus();
-        }
-
-        
-        Health -= myDamage;
-        if (Health <= 0)
-        {
-            Health = 0;
-            Destroy(gameObject, 5f);
-        }
     }
 
     void AddMoneyFanceAttack()

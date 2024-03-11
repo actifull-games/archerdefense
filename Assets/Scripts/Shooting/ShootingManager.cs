@@ -87,9 +87,17 @@ namespace Shooting
             }
             else
             {
-                var distanceToTarget = Vector3.Distance(_currentTarget.transform.position, transform.position);
-                if (distanceToTarget > _stats.AttackRange.CurrentValue)
+                var enemy = _currentTarget.GetComponent<Enemy>();
+                if (enemy.isDead)
+                {
                     _currentTarget = ChangeTarget();
+                }
+                else
+                {
+                    var distanceToTarget = Vector3.Distance(_currentTarget.transform.position, transform.position);
+                    if (distanceToTarget > _stats.AttackRange.CurrentValue)
+                        _currentTarget = ChangeTarget();
+                }
             }
         }
     }

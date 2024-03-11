@@ -17,7 +17,7 @@ namespace Effects
         [AttributesChangeMethod(AttributeChangeOn.Apply)]
         public void Apply(VitalityAttributes attributes, GameplayEffectApplyContext context)
         {
-            var stats = context.OwnerAbilitySystem.GetAttributeSet<StatsAttributes>();
+            var stats = context.InstigatorAbilitySystem.GetAttributeSet<StatsAttributes>();
             var currentDamage = stats.Damage.CurrentValue;
             attributes.Health.CurrentValue -= currentDamage;
         }

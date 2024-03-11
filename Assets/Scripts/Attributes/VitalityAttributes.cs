@@ -13,10 +13,7 @@ namespace Attributes
         
         public override void PreAttributeChange(string attributeName, GameplayAttributeBase attribute, ref bool cancelChange)
         {
-            if (Health.CurrentValue <= 0.0f)
-            {
-                cancelChange = true;
-            }
+
         }
 
         public override void PostAttributeChange(string attributeName, GameplayAttributeBase attribute)
