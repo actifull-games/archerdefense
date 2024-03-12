@@ -72,7 +72,7 @@ public class Enemy : GameBehaviour<ArchersGameRules>
     }
 
     private GameplayAbilitySystem _abilitySystem;
-    private EnemyStatsAttributes _stats;
+    private CharacterStatsAttributes _stats;
 
     private VitalityAttributes _vitality;
 
@@ -83,7 +83,7 @@ public class Enemy : GameBehaviour<ArchersGameRules>
         {
             _abilitySystem = gameObject.AddComponent<GameplayAbilitySystem>();
         }
-        _stats = _abilitySystem.AddAttributeSet<EnemyStatsAttributes>((ctx, s) =>
+        _stats = _abilitySystem.AddAttributeSet<CharacterStatsAttributes>((ctx, s) =>
         {
             s.MoveSpeed.BaseValue = walkSpeed;
             s.Damage.BaseValue = Damage;
