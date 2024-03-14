@@ -33,7 +33,7 @@ namespace Characters
         
         
         
-        private void Awake()
+        protected virtual void Awake()
         {
             IsDead = false;
             _abilitySystem = FindOrCreateAbilitySystem();
@@ -60,7 +60,7 @@ namespace Characters
             aiPath.maxSpeed = Stats.MoveSpeed.CurrentValue;
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             MoveSpeedChanged();
         }

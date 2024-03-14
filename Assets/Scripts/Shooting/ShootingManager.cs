@@ -27,6 +27,8 @@ namespace Shooting
         public UnityEvent OnShoot = new();
         private float _lastShootTime = 0.0f;
 
+        public UnityEvent<GameObject> TargetChanged = new();
+
         public GameObject ChangeTarget()
         {
             if (GameRules.Enemies == null) return null;
@@ -84,6 +86,7 @@ namespace Shooting
             if (_currentTarget == null)
             {
                 _currentTarget = ChangeTarget();
+                TargetChanged.Invoke(_currentTarget);
             }
             else
             {
@@ -91,12 +94,16 @@ namespace Shooting
                 if (enemy.isDead)
                 {
                     _currentTarget = ChangeTarget();
+                    TargetChanged.Invoke(_currentTarget);
                 }
                 else
                 {
                     var distanceToTarget = Vector3.Distance(_currentTarget.transform.position, transform.position);
                     if (distanceToTarget > _stats.AttackRange.CurrentValue)
+                    {
                         _currentTarget = ChangeTarget();
+                        TargetChanged.Invoke(_currentTarget);
+                    }
                 }
             }
         }
