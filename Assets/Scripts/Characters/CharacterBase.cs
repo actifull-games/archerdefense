@@ -94,7 +94,12 @@ namespace Characters
             _focus = null;
         }
 
-        private void Update()
+        public virtual GameObject FindNewTarget()
+        {
+            return null;
+        }
+
+        protected virtual void Update()
         {
             if (_focus != null)
             {

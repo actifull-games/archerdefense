@@ -27,6 +27,8 @@ namespace Animation
         private static readonly int IsAttack = Animator.StringToHash("IsAttack");
         private static readonly int IsMelee = Animator.StringToHash("IsMelee");
 
+        private MeleeAttackManager _meleeAttackManager;
+
         private void Start()
         {
             _animator = GetComponent<Animator>();
@@ -37,6 +39,7 @@ namespace Animation
             _stats = abilitySystem.GetAttributeSet<StatsAttributes>();
             _shooting = GetComponent<ShootingManager>();
             _animator.SetBool(IsMelee, _shooting == null);
+            _meleeAttackManager = GetComponent<MeleeAttackManager>();
         }
 
         private void Die()
@@ -52,6 +55,11 @@ namespace Animation
             }
         }
 
+        public void NotifyHit()
+        {
+            if(_meleeAttackManager != null) _meleeAttackManager.Attack();
+        }
+
         private void Update()
         {
             _animator.SetBool(IsMoving, _character.aiPath.velocity.magnitude > 0);
@@ -59,6 +67,11 @@ namespace Animation
             if (_shooting != null)
             {
                 _animator.SetBool(IsAttack, _shooting.HasTarget);
+            }
+
+            if (_meleeAttackManager != null)
+            {
+                _animator.SetBool(IsAttack, _meleeAttackManager.IsAttacking);
             }
         }
     }

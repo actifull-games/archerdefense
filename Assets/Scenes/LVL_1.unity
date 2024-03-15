@@ -13181,6 +13181,9 @@ MonoBehaviour:
   OnShoot:
     m_PersistentCalls:
       m_Calls: []
+  TargetChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &634398079
 GameObject:
   m_ObjectHideFlags: 0

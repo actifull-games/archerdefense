@@ -1132,6 +1132,9 @@ GameObject:
   - component: {fileID: 3588137813059273589}
   - component: {fileID: 379434273079771937}
   - component: {fileID: 6685739116543223342}
+  - component: {fileID: -7609594335053080797}
+  - component: {fileID: -919385812647504493}
+  - component: {fileID: -2213701891879912650}
   m_Layer: 8
   m_Name: Knigt
   m_TagString: Untagged
@@ -1166,7 +1169,7 @@ Animator:
   m_GameObject: {fileID: 4398549559931770307}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 9ea87583f217c403f9d5b327fc7c6aec, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 31e66e8764cb5414a9c04cfc0d9e5b31, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1183,7 +1186,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4398549559931770307}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
   m_Name: 
@@ -1197,7 +1200,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4398549559931770307}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d69659389e6a455f8b4e17e092d62ca, type: 3}
   m_Name: 
@@ -1314,6 +1317,54 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
+--- !u!114 &-7609594335053080797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4398549559931770307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4263004a7a694997830f084b7a2ad158, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 1
+  damageEffect:
+    effectTypeId: 612312582
+    effectLevel: 1
+--- !u!114 &-919385812647504493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4398549559931770307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5a20580543a4602aaa020add979321f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-2213701891879912650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4398549559931770307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d7c5fa39f0b45b597cde52e2fd2e1ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 2
+  attackSpeed: 2
+  attackRange: 1
+  moveSpeed: 2
+  maxHealth: 2
+  destroyOnDeathDelay: 5
+  rotationSpeed: 10
+  aiPath: {fileID: 6685739116543223342}
 --- !u!1 &4409923525146538343
 GameObject:
   m_ObjectHideFlags: 0
