@@ -11944,6 +11944,7 @@ GameObject:
   - component: {fileID: 455917750}
   - component: {fileID: 455917749}
   - component: {fileID: 455917748}
+  - component: {fileID: 455917751}
   m_Layer: 5
   m_Name: Slider_Character_Exp_LevelUp
   m_TagString: Untagged
@@ -12061,6 +12062,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 455917746}
   m_CullTransparentMesh: 0
+--- !u!114 &455917751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455917746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a23808bad77647ed86f7144b243a50d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 611721837}
 --- !u!1 &459792886
 GameObject:
   m_ObjectHideFlags: 0
@@ -13110,7 +13124,6 @@ MonoBehaviour:
   towerVisual: {fileID: 543450653191840604}
   _shooter: {fileID: 6664081673138951112}
   distanceArcherVisual: {fileID: 1954129141}
-  _health: {fileID: 455917748}
   UpgradeParticele: {fileID: 1686900568}
   WinParticle: {fileID: 784524295}
   FailParticle: {fileID: 2136075178}
@@ -13143,7 +13156,12 @@ MonoBehaviour:
   baseDamage: 5
   baseAttackSpeed: 4
   baseAttackRange: 10
-  maxHealth: 20
+  maxHealth: 50
+  failEffect: {fileID: 2136075178}
+  winEffect: {fileID: 0}
+  towerVisual: {fileID: 543450653191840604}
+  healthCanvas: {fileID: 77970630}
+  isWin: 0
 --- !u!114 &611721842
 MonoBehaviour:
   m_ObjectHideFlags: 0

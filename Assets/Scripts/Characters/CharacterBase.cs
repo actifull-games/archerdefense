@@ -79,6 +79,8 @@ namespace Characters
         protected virtual void OnDeath()
         {
             IsDead = true;
+            ClearFocus();
+            StopMovement();
             Destroy(gameObject, destroyOnDeathDelay);
         }
 

@@ -76,8 +76,6 @@ namespace Shooting
             {
                 p.LookAtTarget = true;
                 p.LaunchProjectile((_currentTarget.transform.position - projectileSpawn.transform.position).normalized);
-                
-                Debug.DrawLine(projectileSpawn.transform.position, _currentTarget.transform.position, Color.red, 1.0f);
             }
         }
 

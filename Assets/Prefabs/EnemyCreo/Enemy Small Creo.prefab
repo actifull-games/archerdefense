@@ -143,6 +143,10 @@ MonoBehaviour:
   _canvasSpawner: {fileID: 9040867994992864927}
   _canvasPlus: {fileID: 3414560299577441882, guid: e97e0fc4581d448728ef79a099bf65c6,
     type: 3}
+  m_camera: {fileID: 0}
+  damageEffect:
+    effectTypeId: 612312582
+    effectLevel: 1
 --- !u!114 &5805191559035648592
 MonoBehaviour:
   m_ObjectHideFlags: 0

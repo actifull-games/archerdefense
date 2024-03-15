@@ -6,7 +6,8 @@ namespace Game
     {
         public ArchersGameManager()
         {
-            
+            SaveGameContextValuesToPersistence = false;
+            SavePlayerContextValuesToPersistence = false;
         }
     }
 }

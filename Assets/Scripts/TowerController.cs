@@ -40,7 +40,6 @@ public class TowerController : GameBehaviour<ArchersGameRules>
     private bool isSetUpgrades;
 
     public Transform distanceArcherVisual;
-    public Slider _health;
     private List<Transform> _enemys = new List<Transform>();
 
     private float startDistance;
@@ -60,8 +59,6 @@ public class TowerController : GameBehaviour<ArchersGameRules>
     private void Start()
     {
         _TowerPlayerAnimancer.Play(idle, 0.25f);
-        _health.maxValue = Health;
-        _health.value = Health;
         startDistance = distanceToEnemy;
         //Debug.Log(Vector3.one*(characterScale + GameManager.instance.scaleFactor));
     }
@@ -85,13 +82,13 @@ public class TowerController : GameBehaviour<ArchersGameRules>
             {
                 Health = 0;
                 isDead = true;
-                _health.value = Health;
+                //_health.value = Health;
                 PlayFail();
                 GameManager.instance.isGameFailed = true;
             }
             else
             {
-                _health.value = Health;
+                //_health.value = Health;
             }
         }
     }

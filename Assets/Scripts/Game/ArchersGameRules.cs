@@ -23,7 +23,9 @@ namespace Game
         
         public void LevelFailed()
         {
+            if (!IsInGame) return;
             IsWin = false;
+            UIController.instance.OpenFail();
             FinishGame();
         }
 
@@ -81,6 +83,8 @@ namespace Game
 
         public IEnumerator WinRoutine()
         {
+            IsWin = true;
+            FinishGame();
             TowerController.instance.StartWinParticle();
             yield return new WaitForSeconds(2f);
             UIController.instance.OpenWin();

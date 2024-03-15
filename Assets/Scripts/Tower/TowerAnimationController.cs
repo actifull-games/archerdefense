@@ -1,5 +1,6 @@
 ﻿using System;
 using Attributes;
+using Game;
 using MobileFramework;
 using MobileFramework.Abilities;
 using Shooting;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Tower
 {
-    public class TowerAnimationController : MonoBehaviour
+    public class TowerAnimationController : GameBehaviour<ArchersGameRules>
     {
         private ShootingManager _shootingManager;
 
@@ -17,6 +18,7 @@ namespace Tower
         private static readonly int IsDead = Animator.StringToHash("IsDead");
         private static readonly int IsShooting = Animator.StringToHash("IsShooting");
         private static readonly int AttackSpeed = Animator.StringToHash("AttackSpeed");
+        private static readonly int IsWin = Animator.StringToHash("IsWin");
 
         private void Start()
         {
@@ -41,7 +43,7 @@ namespace Tower
         {
             _animator.SetBool(IsShooting, _shootingManager.HasTarget);
             _animator.SetFloat(AttackSpeed, _shootingManager.AnimationSpeed);
-
+            _animator.SetBool(IsWin, GameRules.IsWin);
         }
     }
 }

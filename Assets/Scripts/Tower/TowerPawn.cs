@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections;
 using Attributes;
+using DG.Tweening;
 using Effects;
 using Game;
 using MobileFramework;
 using MobileFramework.Abilities;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Tower
 {
@@ -25,6 +28,14 @@ namespace Tower
 
         public VitalityAttributes Vitality { get; private set; }
 
+        public ParticleSystem failEffect;
+        public ParticleSystem winEffect;
+        public Transform towerVisual;
+
+        public GameObject healthCanvas;
+
+        [HideInInspector] public bool isWin = false;
+        
         private void Awake()
         {
             _abilitySystem = GetComponent<GameplayAbilitySystem>();
@@ -43,7 +54,9 @@ namespace Tower
             Vitality = _abilitySystem.AddAttributeSet<VitalityAttributes>((ctx, attr) =>
             {
                 attr.MaxHealth.BaseValue = maxHealth;
+                attr.MaxHealth.CurrentValue = maxHealth;
                 attr.Health.BaseValue = maxHealth;
+                attr.Health.CurrentValue = maxHealth;
                 attr.Reset();
             });
             Vitality.Health.Changed.AddListener(DamageTaken);
@@ -52,12 +65,33 @@ namespace Tower
 
         private void DamageTaken()
         {
-            
+            if (healthCanvas.activeSelf)
+                StopCoroutine(HideHealthBar());
+            healthCanvas.SetActive(true);
+            StartCoroutine(HideHealthBar());
+        }
+
+        private IEnumerator HideHealthBar()
+        {
+            yield return new WaitForSeconds(3f);
+            healthCanvas.SetActive(false);
+        }
+
+        public void PlayWin()
+        {
+            isWin = true;
+            winEffect.Play();
         }
 
         private void OnDeath()
         {
-            GameRules.LevelFailed();
+            failEffect.Play();
+            CameraController.instance.ShakeCamera(4f,0.5f);
+            towerVisual.DOLocalMoveY(-3.5f, 3f).OnComplete(() =>
+            {
+                failEffect.Stop();
+                GameRules.LevelFailed();
+            });
         }
 
         public void ApplyUpgrades()
