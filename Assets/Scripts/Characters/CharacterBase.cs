@@ -31,8 +31,6 @@ namespace Characters
 
         private Transform _focus = null;
         
-        
-        
         protected virtual void Awake()
         {
             IsDead = false;
@@ -79,8 +77,6 @@ namespace Characters
         protected virtual void OnDeath()
         {
             IsDead = true;
-            ClearFocus();
-            StopMovement();
             Destroy(gameObject, destroyOnDeathDelay);
         }
 
@@ -92,11 +88,6 @@ namespace Characters
         public void ClearFocus()
         {
             _focus = null;
-        }
-
-        public virtual GameObject FindNewTarget()
-        {
-            return null;
         }
 
         protected virtual void Update()

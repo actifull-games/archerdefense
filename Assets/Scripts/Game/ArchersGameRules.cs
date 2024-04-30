@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using MobileFramework.Game;
 using Tower;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Game
@@ -20,6 +21,15 @@ namespace Game
         private LevelSettings _settings;
 
         public bool IsWin { get; private set; }
+        
+        public ArchersGameContext TypedGameContext => GetContext<ArchersGameContext>();
+
+        public IReadOnlyList<GameObject> Enemies => _enemies;
+        [NonSerialized, DoNotSerialize] private List<GameObject> _enemies = new();
+
+        public IReadOnlyList<GameObject> Characters => _characters;
+        [NonSerialized, DoNotSerialize] private List<GameObject> _characters = new();
+
         
         public void LevelFailed()
         {
@@ -59,13 +69,6 @@ namespace Game
                 UIController.instance.SetTextPower(playerContext.PowerCount, playerContext.MaxPowerCount);
             }
         }
-
-        public ArchersGameContext TypedGameContext => GetContext<ArchersGameContext>();
-
-        public IReadOnlyList<GameObject> Enemies => _enemies;
-
-
-        private List<GameObject> _enemies = new();
         
         public void AddEnemy(GameObject obj)
         {
@@ -80,6 +83,10 @@ namespace Game
                 StartCoroutine(WinRoutine());
             }
         }
+
+        public void AddCharacter(GameObject obj) => _characters.Add(obj);
+
+        public void RemoveCharacter(GameObject obj) => _characters.Remove(obj);
 
         public IEnumerator WinRoutine()
         {

@@ -21,6 +21,13 @@ namespace Characters
             base.Start();
             _meleeAttackManager.attackRange = Stats.AttackRange.CurrentValue;
             Stats.AttackRange.Changed.AddListener(AttackRangeChanged);
+            GameRules.AddCharacter(gameObject);
+        }
+
+        protected override void OnDeath()
+        {
+            GameRules.RemoveCharacter(gameObject);
+            base.OnDeath();
         }
 
         private void AttackRangeChanged()
@@ -28,7 +35,7 @@ namespace Characters
             _meleeAttackManager.attackRange = Stats.AttackRange.CurrentValue;
         }
 
-        public override GameObject FindNewTarget()
+        private GameObject FindNewTarget()
         {
             var position = transform.position;
             return (from e in GameRules.Enemies

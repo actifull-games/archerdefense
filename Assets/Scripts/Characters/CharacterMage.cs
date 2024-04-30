@@ -13,6 +13,18 @@ namespace Characters
             _shootingManager.TargetChanged.AddListener(TargetChanged);
         }
 
+        protected override void Start()
+        {
+            base.Start();
+            GameRules.AddCharacter(gameObject);
+        }
+
+        protected override void OnDeath()
+        {
+            GameRules.RemoveCharacter(gameObject);
+            base.OnDeath();
+        }
+
         private void TargetChanged(GameObject arg0)
         {
             if(arg0 != null) 
